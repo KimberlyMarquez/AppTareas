@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -39,6 +40,10 @@ fun TasksScreen(
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
 // Estado local: texto del campo de nueva tarea.
     var nuevaTareaTexto by remember { mutableStateOf("") }
+
+    var taskToDelete by remember {
+        mutableStateOf<TaskEntity?>(null)
+    }
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -76,7 +81,7 @@ fun TasksScreen(
                                     viewModel.toggleCompleted(task)
                                 },
                                 onDelete = {
-                                    viewModel.deleteTask(task)
+                                    taskToDelete = task
                                 }
                             )
                         }
@@ -115,5 +120,42 @@ fun TasksScreen(
                 }
             }
         }
+    }
+    if (taskToDelete != null) {
+
+        AlertDialog(
+            onDismissRequest = {
+                taskToDelete = null
+            },
+
+            title = {
+                Text("Confirmar eliminación")
+            },
+
+            text = {
+                Text("¿Seguro que quieres eliminar esta tarea?")
+            },
+
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.deleteTask(taskToDelete!!)
+                        taskToDelete = null
+                    }
+                ) {
+                    Text("Eliminar")
+                }
+            },
+
+            dismissButton = {
+                Button(
+                    onClick = {
+                        taskToDelete = null
+                    }
+                ) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }
