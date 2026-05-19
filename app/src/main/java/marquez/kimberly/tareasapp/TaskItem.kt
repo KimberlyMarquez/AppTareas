@@ -48,7 +48,6 @@ fun TaskItem(
             else if (it == SwipeToDismissBoxValue.EndToStart) {
                 onDelete()
             }
-
             false
         }
     )
