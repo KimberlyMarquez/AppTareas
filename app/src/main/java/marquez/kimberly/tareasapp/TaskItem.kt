@@ -33,6 +33,7 @@ fun TaskItem(
     onDelete: () -> Unit
 ) {
 // Formato de fecha corto: dia/mes hora:minuto.
+
     val dateFormat = remember {
         SimpleDateFormat("dd/MM HH:mm")
     }
