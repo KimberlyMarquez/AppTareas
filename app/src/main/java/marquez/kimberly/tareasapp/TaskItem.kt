@@ -1,5 +1,6 @@
 package marquez.kimberly.tareasapp
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import java.net.CookieStore
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -67,7 +69,7 @@ fun TaskItem(
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onErrorContainer
+                    tint = Color.White
                 )
             }
         }
