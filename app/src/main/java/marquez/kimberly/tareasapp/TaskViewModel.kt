@@ -23,21 +23,20 @@ class TaskViewModel(
     private val dao: TaskDao
 ) : ViewModel() {
 
-// Texto que el usuario esta escribiendo en el campo
-// de busqueda. Cambia con cada tecla, pero NO dispara
-// la consulta a la base de datos.
+    // Texto que el usuario esta escribiendo en el campo
+    // de busqueda. Cambia con cada tecla, pero NO dispara
+    // la consulta a la base de datos.
     private val _searchInput = MutableStateFlow("")
     val searchInput: StateFlow<String> = _searchInput.asStateFlow()
-// Texto con el que se esta filtrando efectivamente.
-// Solo cambia cuando el usuario pulsa el boton de buscar.
+    // Texto con el que se esta filtrando efectivamente.
+    // Solo cambia cuando el usuario pulsa el boton de buscar.
     private val _activeQuery = MutableStateFlow("")
-
     private val _selectedOrder = MutableStateFlow(TaskOrder.RECIENTES_PRIMERO)
     val selectedOrder: StateFlow<TaskOrder> = _selectedOrder.asStateFlow()
 
-// Exponemos la lista de tareas como StateFlow.
-// stateIn convierte el Flow del DAO en un StateFlow
-// que Compose puede observar fácilmente.
+    // Exponemos la lista de tareas como StateFlow.
+    // stateIn convierte el Flow del DAO en un StateFlow
+    // que Compose puede observar fácilmente.
     @OptIn(ExperimentalCoroutinesApi::class)
     val tasks: StateFlow<List<TaskEntity>> = combine(
         _activeQuery,
@@ -91,7 +90,6 @@ class TaskViewModel(
 // observa el Flow de tasks.
         _activeQuery.value = _searchInput.value.trim()
     }
-
     fun onOrderChanged(newOrder: TaskOrder) {
         _selectedOrder.value = newOrder
     }
