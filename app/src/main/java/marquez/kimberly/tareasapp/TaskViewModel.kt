@@ -44,17 +44,9 @@ class TaskViewModel(
     ){
         query, order ->
         Pair(query, order)
-
     }
         .flatMapLatest { (query, order) ->
-            dao.searchTasks(query).map { listaFiltrada ->
-                when (order) {
-                    TaskOrder.RECIENTES_PRIMERO -> listaFiltrada.sortedByDescending { it.creado_en }
-                    TaskOrder.ANTIGUAS_PRIMERO -> listaFiltrada.sortedBy { it.creado_en }
-                    TaskOrder.TITULO_AZ -> listaFiltrada.sortedBy { it.titulo.lowercase() }
-                    TaskOrder.TITULO_ZA -> listaFiltrada.sortedByDescending { it.titulo.lowercase() }
-                }
-            }
+            dao.searchTasks(query, order.queryValue)
         }
         .stateIn(
             scope = viewModelScope,

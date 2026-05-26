@@ -27,8 +27,13 @@ interface TaskDao {
     @Query("""
         SELECT * FROM tasks
         WHERE titulo LIKE '%' || :query || '%'
-        ORDER BY  creado_en DESC
+        ORDER BY  
+            CASE WHEN :orderBy = 'RECIENTES' THEN creado_en END DESC,
+            CASE WHEN :orderBy = 'ANTIGUAS' THEN creado_en END ASC,
+            CASE WHEN :orderBy = 'TITULO_AZ' THEN LOWER(titulo) END ASC,
+            CASE WHEN :orderBy = 'TITULO_ZA' THEN LOWER(titulo) END DESC
+            
     """)
 
-    fun searchTasks(query: String): Flow<List<TaskEntity>>
+    fun searchTasks(query: String, orderBy: String): Flow<List<TaskEntity>>
 }
